@@ -1,0 +1,89 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+body{
+  background-color: azure;
+}
+
+.login-page{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.login-page h1{
+  font-size: 45px;
+  font-weight: bolder;
+  font-family: sans-serif;
+}
+.inputs{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: azure;
+  
+}
+
+.inputs input{
+  background-color: #0e0f12;
+  border: none  ;
+  width: 65%;
+  height: 40px;
+  margin: 7px;
+  color: azure;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.inputs p{
+  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.inputs button{
+  margin-top: 10px;
+  background-color: azure;
+  border: none;
+  width: 60px;
+  height: 35px;
+  border-radius: 5px;
+}
+
+.inputs input::placeholder{
+padding:5px;
+opacity: 0.6;
+}
+
+.login-box{
+  background-color:#15171b;
+  height: 300px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 25px;
+
+}
+
+.choice-page{
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.link{
+  margin: 35px;
+  width: 100px;
+  background-color:#0e0f12;
+  text-align: center;
+  text-decoration: none;
+  color: azure;
+  height: 50px;
+  padding-top: 13px;
+  border-radius: 5px;
+}
