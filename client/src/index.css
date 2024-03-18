@@ -54,6 +54,9 @@ body{
   height: 35px;
   border-radius: 5px;
 }
+.inputs button:hover{
+  background-color: bisque;
+}
 
 .inputs input::placeholder{
 padding:5px;
@@ -86,4 +89,66 @@ opacity: 0.6;
   height: 50px;
   padding-top: 13px;
   border-radius: 5px;
+}
+
+.navbar{
+  display: flex;
+  justify-content: space-between;
+  background-color: #15171b;
+  height: 40px;
+  align-items: center;
+}
+
+.nav-element  {
+  text-decoration: none;
+  color:azure;
+  margin-right: 30px;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+
+.navbar .title{
+  color: bisque;
+  margin-left: 30px;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+
+.course-box{
+  width: 250px;
+  height: 280px;
+  background-color: #0e0f12 ;
+  margin: 30px;
+  margin-top: 50px;
+  border-radius: 15px;
+  box-shadow: 3px 3px 25px;
+  
+}
+
+.course-img{
+  border-radius:15px ;
+  height: 60%;  
+  width: 100%;
+ 
+}
+
+.course-box p{
+  color: azure;
+  padding-left: 15px ;
+  padding-bottom: 10px;
+  
+}
+
+.course-box button{
+  transform: translate(160px,-10px);
+  margin-top: 10px;
+  border: none;
+  width: 60px;
+  height: 30px;
+  border-radius: 20px;
+
+}
+.courses-page{
+  display: flex;
+  flex-wrap: wrap;
 }

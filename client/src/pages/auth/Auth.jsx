@@ -27,18 +27,19 @@ function Auth(){
             } else {
                 setCookie('user_type', data.Type);
                 setCookie('authToken', data.token);
+                setCookie('userId', data.userId);
     
-                console.log("User type:", data.Type);
+                console.log(data);
     
                 if (data.Type === "admin") {
                     console.log("Redirecting to /");
                     navigateTo("/");
                 } else if (data.Type === "teacher") {
                     console.log("Redirecting to /teacher");
-                    navigateTo("/teacher");
+                    navigateTo("/teacher/home/");
                 } else if (data.Type === "student") {
                     console.log("Redirecting to /student");
-                    navigateTo("/student");
+                    navigateTo("/student/home/");
                 }
             }
         } catch (error) {
@@ -63,7 +64,7 @@ function Auth(){
                             onChange={(e) => setPassword(e.target.value)} />
                         <button onClick={(e) => handleSubmit(e)}>Login</button>
                     </div>
-                    {error && <div className="error">{error}</div>}
+                    {error && <div className="error"  style={{textAlign:"center"}}>{error}</div>}
                 </div>
             </div>
         </div>

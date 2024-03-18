@@ -41,8 +41,30 @@ app.post("/login",async (req,res) => {
     if (!login.rows.length) return res.json({ detail: 'user does not exist' })
     else {
         const token = jsonwebtoken.sign({ Username }, 'secret', { expiresIn: '1hr' });
-        res.json({ Username : login.rows[0].user_username , 'Type': login.rows[0].user_type, 'token': token });
+        res.json({ userId : login.rows[0].user_id , 'Type': login.rows[0].user_type, 'token': token });
     }
+})
+
+
+app.post("/teacher/courses/",async (req,res) =>{
+    try{
+        const  {userId , courseName , courseClass } = req.body
+        const response =  await db.query(`INSERT INTO courses (user_id , course_name , cou_class)
+        VALUES ($1,$2,$3)`,[userId ,courseName,courseClass])
+        res.json(response)
+    }
+    catch(err){
+        console.log(err)
+    }
+
+} )
+
+app.get("/teacher/courses/:id",async (req,res) =>{
+    const {id}= req.params
+    // console.log(req.params)
+    const response = await db.query("SELECT * FROM courses WHERE user_id=$1",[id])
+    res.json(response)
+
 })
 
 

@@ -1,8 +1,11 @@
 import React from 'react'
+import Nav from '../../components/teacher/Nav'
 
 const Teacher = () => {
   return (
-    <div>Teacher</div>
+    <div>
+      <Nav/>
+    </div>
   )
 }
 

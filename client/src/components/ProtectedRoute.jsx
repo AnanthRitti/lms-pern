@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Cookies, useCookies } from 'react-cookie';
+import { Cookies, useCookies } from 'react-cookie'
+import { Outlet } from 'react-router-dom';
 
 const ProtectedRoute = ({ userType , children }) => {
     const [cookie,setCookie] = useCookies()
@@ -37,7 +38,7 @@ const ProtectedRoute = ({ userType , children }) => {
 
     // After loading, render based on authentication status
     if (isAuthenticated) {
-        return children;
+        return <Outlet/>
     } else {
         return <Navigate to="/login" />;
     }
