@@ -4,19 +4,24 @@ import cors from "cors";
 import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
 import cookieParser from "cookie-parser";
+import uploadOnCloudinary from "./utils/cloudinary.js";
+import upload from "./middlewares/multer.middleware.js"
+
 
 const app = express();
 const port = 3000;
 
 app.use(cors({
    origin : ["http://localhost:5173","http://localhost:5173/login"],
-   methods : ["GET","POST"],
+   methods : ["GET","POST","DELETE"],
    credentials:true 
 }
 ));
 app.use(cookieParser())
 app.use(express.json())
-
+app.use(express.urlencoded({
+    extended: false
+    }));
 const varifyUser = (req,res,next) => {
     const token = req.cookies.authToken
     console.log(token)
@@ -48,9 +53,9 @@ app.post("/login",async (req,res) => {
 
 app.post("/teacher/courses/",async (req,res) =>{
     try{
-        const  {userId , courseName , courseClass } = req.body
-        const response =  await db.query(`INSERT INTO courses (user_id , course_name , cou_class)
-        VALUES ($1,$2,$3)`,[userId ,courseName,courseClass])
+        const  {userId , courseName , courseClass,enrollKey } = req.body
+        const response =  await db.query(`INSERT INTO courses (user_id , course_name , cou_class, enrollment_key)
+        VALUES ($1,$2,$3,$4)`,[userId ,courseName,courseClass,enrollKey])
         res.json(response)
     }
     catch(err){
@@ -66,6 +71,63 @@ app.get("/teacher/courses/:id",async (req,res) =>{
     res.json(response)
 
 })
+
+app.post("/teacher/courses/course/:course_id",upload.single("file") , async (req,res)=>{
+  try{
+    const response= await uploadOnCloudinary(req.file.path) 
+    res.json("file uploaded")
+    const data = await db.query(`INSERT INTO files (course_id , file_name , file_url) 
+    VALUES ($1,$2,$3)`, [req.params.course_id , req.body.file_name,response.url ])
+    console.log(data)
+  }
+  catch(err){
+    console.log(err)
+  }
+
+//    res.json(response.url)
+//    res.json(url)
+
+})
+
+app.get("/teacher/courses/course/:course_id" , async (req,res)=>{
+    try{
+      
+    
+      const response = await db.query(`SELECT * FROM files WHERE course_id=$1 `, [req.params.course_id])
+    //   console.log(response.rows)
+      res.json(response.rows)
+      
+    }
+    catch(err){
+      console.log(err)
+    }
+  
+  //    res.json(response.url)
+  //    res.json(url)
+  
+  })
+
+  app.delete("/teacher/courses/course/:course_id" , async (req,res)=>{
+    try{
+      
+        console.log(req)
+    
+      const response = await db.query(`DELETE FROM files WHERE file_id=$1 `, [req.body.file_id])
+      console.log(response)
+      res.json(response)
+      
+    }
+    catch(err){
+      console.log(err)
+    }
+  
+  //    res.json(response.url)
+  //    res.json(url)
+  
+  })
+  
+  
+
 
 
 app.listen(port, () => {

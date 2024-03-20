@@ -10,8 +10,10 @@ import Student from "./pages/student/Student.jsx";
 import TeacherCourses from "./pages/teacher/TeacherCourses.jsx";
 import TeacherAssig from "./pages/teacher/TeacherAssig.jsx";
 import TeacherProfile from "./pages/teacher/TeacherProfile.jsx";
+import Course from "./pages/teacher/Course.jsx";
 import  store  from "./redux/store.js";
 import { Provider } from 'react-redux'
+
 
 function App() {
   const [cookie, setCookie, removeCookie] = useCookies(null);
@@ -38,7 +40,12 @@ function App() {
         },
         {
           path: "courses",
-          element:<TeacherCourses/>
+          element:<TeacherCourses/>,
+
+        },
+        {
+          path: "courses/course/:course_id",
+          element: <Course/>,
         },
         {
           path: "assignments",
