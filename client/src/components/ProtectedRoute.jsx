@@ -1,44 +1,43 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Cookies, useCookies } from 'react-cookie'
+import { useCookies } from 'react-cookie';
 import { Outlet } from 'react-router-dom';
 
-const ProtectedRoute = ({ userType , children }) => {
-    const [cookie,setCookie] = useCookies()
+const ProtectedRoute = ({ userType, children }) => {
+    const [cookie] = useCookies();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(true); // Add loading state
-    const user_type = cookie.user_type
-    // console.log(user_type)
-    console.log(userType)
-
+    const user_type = cookie.user_type;
 
     useEffect(() => {
-        axios.get('http://localhost:3000/', { withCredentials: true })
-            .then(response => {
-                if (response.data === "success" && user_type == userType) {
+        const checkAuthentication = async () => {
+            try {
+                // Simulate an authentication check
+                // Here, you can replace it with actual authentication logic
+                if (user_type === userType) {
                     setIsAuthenticated(true);
                 } else {
                     setIsAuthenticated(false);
                 }
-            })
-            .catch(error => {
-                console.error('Error checking authentication:', error);
-                setIsAuthenticated(false);
-            })
-            .finally(() => {
-                setIsLoading(false); // Update loading state
-            });
-    }, []);
+            } catch (error) {
+                // Handle error
+            } finally {
+                setIsLoading(false); // Mark loading as complete
+            }
+        };
+
+        checkAuthentication();
+    }, [user_type, userType]); // Include dependencies
 
     // While loading, you can return a loading indicator or null
     if (isLoading) {
-        return null; // or return loading indicator
+        return <div>Loading...</div>; // or return loading indicator
     }
 
     // After loading, render based on authentication status
     if (isAuthenticated) {
-        return <Outlet/>
+        return <Outlet />;
     } else {
         return <Navigate to="/login" />;
     }

@@ -5,6 +5,7 @@ import { addCourse } from '../../redux/features/course/courseSlice';
 import { Cookies, useCookies } from 'react-cookie';
 import axios from "axios";
 import CoursesList from '../../components/teacher/CoursesList';
+import { useNavigate } from 'react-router-dom';
 
 const TeacherCourses = () => {
   const  [cookie,setCookie] = useCookies()
@@ -13,6 +14,7 @@ const TeacherCourses = () => {
   const [enrollKey,setEnrollKey] = useState("");
   const [data,setData]= useState()
   const [showModel , setShowModel] = useState(false)
+  const navigateto = useNavigate()
   // const obj = {id : cookie.userId, name : name , class : grade}
   // const dispatch = useDispatch()
 
@@ -25,7 +27,7 @@ const TeacherCourses = () => {
     }
       try{
         console.log(course)
-        const response = await axios.post("http://localhost:3000/teacher/courses/",course)
+        const response = await axios.post("http://localhost:3000/teacher/courses/",course,{ withCredentials: true })
         console.log(response)
         // dispatch(addCourse(course))
         getCourses()
@@ -34,6 +36,7 @@ const TeacherCourses = () => {
       }
       catch(err){
         console.log(err)
+        navigateto("/login")
       }
 
       
@@ -41,7 +44,7 @@ const TeacherCourses = () => {
 
   async function getCourses(){
     try{
-      const response = await axios.get(`http://localhost:3000/teacher/courses/${cookie.userId}`)
+      const response = await axios.get(`http://localhost:3000/teacher/courses/${cookie.userId}`,{ withCredentials: true })
       const data = response.data.rows
       setData(data)
       console.log(response.data)
@@ -50,6 +53,7 @@ const TeacherCourses = () => {
     }
     catch(err){
       console.log(err)
+      navigateto("/login")
     }
   }
 

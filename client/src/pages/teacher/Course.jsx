@@ -16,9 +16,10 @@ const Course = () => {
         setLoading(true); // Set loading state to true while submitting
 
         const formData = new FormData(event.target);
+        console.log(formData)
         
         try {
-            const response = await axios.post(`http://localhost:3000/teacher/courses/course/${params.course_id}`, formData);
+            const response = await axios.post(`http://localhost:3000/teacher/courses/course/${params.course_id}`, formData , { withCredentials: true } );
             setResponse(response.data);
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -31,7 +32,7 @@ const Course = () => {
 
     async function getNotes(){
 
-        const response = await axios.get(`http://localhost:3000/teacher/courses/course/${params.course_id}`)
+        const response = await axios.get(`http://localhost:3000/teacher/courses/course/${params.course_id}`, { withCredentials: true })
         console.log(response.data)
         setNotes(response.data)
 
@@ -39,7 +40,8 @@ const Course = () => {
 
     async function deleteNotes(file_id){
         console.log(file_id)
-        const response= await axios.delete(`http://localhost:3000/teacher/courses/course/${params.course_id}`,{ data: { file_id: file_id } })
+        const data = { data : {file_id: file_id },  withCredentials: true  };
+        const response= await axios.delete(`http://localhost:3000/teacher/courses/course/${params.course_id}`, data )
         console.log(response)
         getNotes()
     }

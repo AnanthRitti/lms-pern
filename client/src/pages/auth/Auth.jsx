@@ -44,7 +44,7 @@ function Auth(){
             }
         } catch (error) {
             console.error('Error during login:', error);
-            setError('An error occurred during login. Please try again.');
+            setError(error.response.data.error);
         }
     }
     
@@ -58,9 +58,9 @@ function Auth(){
                 <div className="login-box">
                     <div className="inputs">
                         <p>Welcome Back!</p>
-                        <input type="text" placeholder="Username" 
+                        <input type="text" placeholder="Username" required
                             onChange={(e) => setUsername(e.target.value)} />
-                        <input type="password" placeholder="Password"
+                        <input type="password" placeholder="Password" required
                             onChange={(e) => setPassword(e.target.value)} />
                         <button onClick={(e) => handleSubmit(e)}>Login</button>
                     </div>

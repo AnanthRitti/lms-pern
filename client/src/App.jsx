@@ -13,6 +13,9 @@ import TeacherProfile from "./pages/teacher/TeacherProfile.jsx";
 import Course from "./pages/teacher/Course.jsx";
 import  store  from "./redux/store.js";
 import { Provider } from 'react-redux'
+import StudentCourses from "./pages/student/StudentCourses.jsx";
+import StudentAssig from './pages/student/StudentAssig.jsx'
+import StudentProfile from "./pages/student/StudentProfile.jsx";
 
 
 function App() {
@@ -64,7 +67,20 @@ function App() {
         {
           path:"home",
           element:<Student/>
-        }
+        },
+        {
+          path:"courses",
+          element:<StudentCourses/>
+        },
+        {
+          path:"assignments",
+          element:<StudentAssig/>
+        },
+        {
+          path:"profile",
+          element:<StudentProfile/>
+        },
+
       ]
     }
 
