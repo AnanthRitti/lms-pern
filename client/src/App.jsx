@@ -16,6 +16,7 @@ import { Provider } from 'react-redux'
 import StudentCourses from "./pages/student/StudentCourses.jsx";
 import StudentAssig from './pages/student/StudentAssig.jsx'
 import StudentProfile from "./pages/student/StudentProfile.jsx";
+import StudentCourse from "./pages/student/StudentCourse.jsx";
 
 
 function App() {
@@ -79,6 +80,10 @@ function App() {
         {
           path:"profile",
           element:<StudentProfile/>
+        },
+        {
+          path: "courses/course/:course_id",
+          element: <StudentCourse/>,
         },
 
       ]
