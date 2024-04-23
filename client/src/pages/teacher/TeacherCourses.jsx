@@ -6,6 +6,7 @@ import { Cookies, useCookies } from 'react-cookie';
 import axios from "axios";
 import CoursesList from '../../components/teacher/CoursesList';
 import { useNavigate } from 'react-router-dom';
+import { isExpired, decodeToken } from "react-jwt";
 
 const TeacherCourses = () => {
   const  [cookie,setCookie] = useCookies()
@@ -15,19 +16,20 @@ const TeacherCourses = () => {
   const [data,setData]= useState()
   const [showModel , setShowModel] = useState(false)
   const navigateto = useNavigate()
+  const myDecodedToken = decodeToken(cookie.authToken);
   // const obj = {id : cookie.userId, name : name , class : grade}
   // const dispatch = useDispatch()
 
   async function handleSubmit(e){
     const course = {
-      userId: cookie.userId,
+      userId: myDecodedToken.userId,
       courseName : name,
       courseClass : grade,
       enrollKey : enrollKey
     }
       try{
         console.log(course)
-        const response = await axios.post("http://localhost:3000/teacher/courses/",course,{ withCredentials: true })
+        const response = await axios.post("http://localhost:3000/teacher/courses/", course, { withCredentials: true });
         console.log(response)
         // dispatch(addCourse(course))
         getCourses()
@@ -44,7 +46,7 @@ const TeacherCourses = () => {
 
   async function getCourses(){
     try{
-      const response = await axios.get(`http://localhost:3000/teacher/courses/${cookie.userId}`,{ withCredentials: true })
+      const response = await axios.get(`http://localhost:3000/teacher/courses/${myDecodedToken.userId}`,{ withCredentials: true })
       const data = response.data.rows
       setData(data)
       console.log(response.data)

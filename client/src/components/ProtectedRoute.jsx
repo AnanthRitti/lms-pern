@@ -3,39 +3,42 @@ import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { Outlet } from 'react-router-dom';
+import { isExpired, decodeToken } from "react-jwt";
+
 
 const ProtectedRoute = ({ userType, children }) => {
     const [cookie] = useCookies();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(true); // Add loading state
-    const user_type = cookie.user_type;
+    const myDecodedToken = decodeToken(cookie.authToken);
+
 
     useEffect(() => {
         const checkAuthentication = async () => {
             try {
-                // Simulate an authentication check
-                // Here, you can replace it with actual authentication logic
-                if (user_type === userType) {
+
+                console.log(myDecodedToken)
+
+                if (myDecodedToken && myDecodedToken.Type === userType) {
                     setIsAuthenticated(true);
                 } else {
                     setIsAuthenticated(false);
                 }
             } catch (error) {
-                // Handle error
+                console.error("Error while checking authentication:", error);
             } finally {
-                setIsLoading(false); // Mark loading as complete
+                setIsLoading(false); 
             }
         };
 
         checkAuthentication();
-    }, [user_type, userType]); // Include dependencies
+    }, [myDecodedToken, userType]);
 
-    // While loading, you can return a loading indicator or null
+
     if (isLoading) {
-        return <div>Loading...</div>; // or return loading indicator
+        return <div>Loading...</div>; 
     }
 
-    // After loading, render based on authentication status
     if (isAuthenticated) {
         return <Outlet />;
     } else {

@@ -7,8 +7,6 @@ const Logout = () => {
     function logout() {
   
       removeCookie('authToken', {  domain: 'localhost' })
-      removeCookie('userId', {  domain: 'localhost' })
-      removeCookie('user_type', { domain: 'localhost' })
       // You may choose to redirect or refresh the page after logout
       window.location.reload();
     }

@@ -25,11 +25,11 @@ function Auth(){
             if (data.detail) {
                 setError(data.detail);
             } else {
-                setCookie('user_type', data.Type);
+               
                 setCookie('authToken', data.token);
-                setCookie('userId', data.userId);
+              
     
-                console.log(data);
+                // console.log(data);    
     
                 if (data.Type === "admin") {
                     console.log("Redirecting to /");

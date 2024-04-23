@@ -12,7 +12,7 @@ const userLogin = async (req,res) => {
     console.log(Password)
     if (!login.rows.length) return res.json({ detail: 'user does not exist' })
     else {
-        const token = jsonwebtoken.sign({ Username }, 'secret', { expiresIn: '1hr' });
+        const token = jsonwebtoken.sign({ Username : Username ,  userId : login.rows[0].user_id , 'Type': login.rows[0].user_type }, 'secret', { expiresIn: '1hr' });
         res.json({ userId : login.rows[0].user_id , 'Type': login.rows[0].user_type, 'token': token });
     }
 }
